@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- Console Out -->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{HH:mm:ss.SSS} %-5p %C{2}(%M)\#%L - %m [%t] %d%n" />
+		</layout>
+	</appender>
+
+	<!-- File Out -->
+	<appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+		<param name="Append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<param name="File" value="C:\\logs\\MavenSample\\sample.log" />
+		<param name="MaxFileSize" value="12MB" /><!-- 最大ファイルサイズ。デフォルトは10MB -->
+		<param name="MaxBackupIndex" value="7" /><!-- 最大バックアップインデックス。デフォルトは1 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss,SSS} %-5p %c - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- File Out(Exception) -->
+ 	<appender name="EXCEPTION_FILE" class="org.apache.log4j.RollingFileAppender">
+		<param name="Append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<param name="File" value="C:\\logs\\MavenSample\\sample_exception.log" />
+		<param name="MaxFileSize" value="10MB" />
+		<param name="MaxBackupIndex" value="3" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss,SSS} %-5p %c - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- Struts2で出るログを削減する対応 START -->
+	<logger name="org.apache.commons.digester">
+		<level value ="INFO" />
+	</logger>
+
+	<logger name="org.apache.jasper">
+		<level value ="INFO" />
+	</logger>
+
+	<logger name="org.apache.struts2">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="freemarker">
+		<level value="INFO" />
+	</logger>
+
+	<logger name="com.opensymphony.xwork2">
+		<level value="INFO" />
+	</logger>
+
+	<logger name="com.opensymphony.xwork2.ognl.OgnlValueStack">
+		<level value ="ERROR" />
+	</logger>
+	<!-- Struts2で出るログを削減する対応 END -->
+
+	<!-- Exception用Logger -->
+	<category name="sample.exception">
+		<priority value="ERROR" />
+		<appender-ref ref="EXCEPTION_FILE" />
+	</category>
+
+	<!-- Root Logger -->
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="FILE"/>
+	</root>
+
+</log4j:configuration>

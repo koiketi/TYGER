@@ -1,0 +1,1 @@
+<!-- loginActionを起動するための空ファイル。welcome-fileと同じ名称で空ファイルを置いておくとTomcatが自動的に対応するActionを呼んでくれる -->

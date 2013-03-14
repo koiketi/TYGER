@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IDとパスワード認証の場合 -->
+<!-- integratedSecurity=true;をuser=UserName;password=*****;に変更してください -->
+<Context>
+	<Resource name="jdbc/sample" auth="Container"
+		type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
+		url="jdbc:postgresql://10.63.0.248:5432/testdb"
+		username="postgres" password="password"
+		maxActive="200" maxIdle="30" maxWait="-1" />
+</Context>

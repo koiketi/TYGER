@@ -1,0 +1,138 @@
+div.login {
+	padding: 0 0 0 35%;
+}
+
+div.menu {
+	padding: 0 0 0 40%;
+}
+
+div.loginbutton {
+	padding: 0 0 0 35%;
+}
+
+span.header_font {
+	color: #87CEEB;
+	font-size: 20px;
+}
+
+span.title {
+	color: #FFA500;
+	font-size: 24px;
+}
+
+.tbl_login td {
+	font-size: 12px;
+	valign: center;
+	height: 22pt;
+}
+
+.tbl_login th {
+	font-size: 12px;
+}
+
+.tbl {
+	border-collapse: collapse;
+	border: 1px solid darkgray;
+}
+
+.tbl td {
+	font-size: 12px;
+	valign: center;
+	height: 10pt;
+	border: 1px solid lightgrey;
+}
+
+.tbl th {
+	font-size: 12px;
+}
+
+.tbl_nowrap td {
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+.tbl_nowrap th {
+	font-size: 12px;
+}
+
+.labeltd {
+	font-size: 12px;
+	background-color: #CCFF99;
+	white-space: nowrap;
+}
+
+.button {width = 90px;height =30px;
+	
+}
+
+.resultbutton {width =200px;height =30px;
+	
+}
+
+.downlordbutton {width =120px;height =30px;
+	
+}
+
+.no {
+	width: 3%;
+}
+
+.order_no {
+	width: 8%;
+}
+
+.est_no {
+	width: 8%;
+}
+
+.order_date {
+	width: 8%;
+}
+
+.trade_name {
+	width: 20%;
+}
+
+.quantity {
+	width: 8%;
+}
+
+.sum {
+	width: 10%;
+}
+
+.limit {
+	width: 8%;
+}
+
+.order_condition {
+	width: 12%;
+}
+
+.supplier {
+	width: 15%;
+}
+
+.req_no {
+	width: 8%;
+}
+
+.del_date {
+	width: 8%;
+}
+
+.est_date {
+	width: 8%;
+}
+
+.est_con {
+	width: 12%;
+}
+
+.toraku_con {
+	width: 5%;
+}
+
+.defaultbutton {
+	width: 80px;
+}

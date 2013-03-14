@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<package name="history" namespace="/"  extends="json-default">
+
+
+		<result-types>
+			<result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+		</result-types>
+
+		<interceptors>
+
+
+
+			<!-- ExceptionHandling用定義(ExceptionMappingInterceptor拡張) -->
+			<interceptor name="SampleExceptionInterceptor" class="sugiim.struts2sample.interceptor.SampleExceptionMappingInterceptor"/>
+
+			<!-- LoginInterceptor用定義(AbstractInterceptor拡張) -->
+			<interceptor name="LoginInterceptor"
+				class="sugiim.struts2sample.interceptor.LoginInterceptor" />
+
+			<!-- LoginInterceptorと独自のExceptionInterceptorを 足し合わせた新しい「defaultLoginStack」を定義 -->
+			<interceptor-stack name="defaultLoginStack">
+
+				<!-- 独自ExceptionMappingInterceptor定義 -->
+				<interceptor-ref name="SampleExceptionInterceptor">
+					<param name="logEnabled">true</param>
+					<param name="logCategory">sample.exception</param>
+					<param name="logLevel">error</param>
+				</interceptor-ref>
+
+				<!-- loginInterceptor -->
+				<interceptor-ref name="LoginInterceptor">
+					<param name="excludeMethods">login,logout</param>
+				</interceptor-ref>
+
+				<!-- defaultStack.xmlで定義されているinterceptorの読み込み -->
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="multiselect"/>
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="debugging" />
+			</interceptor-stack>
+
+		</interceptors>
+
+		<!-- デフォルトのinterceptorを、defaultLoginStackに設定 -->
+		<default-interceptor-ref name="defaultLoginStack" />
+
+		<global-results>
+
+			<!-- 例外発生時の遷移先JSP -->
+			<result name="exception">/WEB-INF/jsp/error.jsp</result>
+
+			<result name="login" type="redirect">/login</result>
+			<result name="menu" type="redirect">/menu</result>
+			<result name="download" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment; filename = ${fileName}</param>
+				<param name="bufferSize">4096</param>
+				<param name="contentLength">${contentLength}</param>
+			</result>
+		</global-results>
+
+		<!-- exception-mappings -->
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception" result="exception"/>
+		</global-exception-mappings>
+
+		<action name="login" class="sugiim.struts2sample.action.LoginAction">
+			<result name="success">/WEB-INF/jsp/login.jsp</result>
+			<result name="input">/WEB-INF/jsp/login.jsp</result>
+			<result name="loginFailed">/WEB-INF/jsp/login.jsp</result>
+			<result name="login" type="redirect">menu</result>
+		</action>
+
+		<!-- ログアウト -->
+		<action name="logout" class="sugiim.struts2sample.action.LogoutAction">
+			<result name="success" type="redirect">/login</result>
+		</action>
+
+		<action name="menu">
+			<result>/WEB-INF/jsp/menu.jsp</result>
+		</action>
+
+		<!-- 検索Action初期表示用 -->
+		<action name="sample">
+			<result>/WEB-INF/jsp/sample.jsp</result>
+		</action>
+
+		<!-- 検索ActionのSample -->
+		<action name="selectSample" class="sugiim.struts2sample.action.SampleAction">
+			<result name="input">/WEB-INF/jsp/sample.jsp</result>
+			<result name="success">/WEB-INF/jsp/sample.jsp</result>
+		</action>
+
+
+
+		<!-- 検索Action初期表示用 -->
+		<action name="sample2">
+			<result>/WEB-INF/jsp/sample2.jsp</result>
+		</action>
+
+		<!-- 検索ActionのSample -->
+		<action name="selectSample2" class="sugiim.struts2sample.action.SampleAction">
+			<result name="success" type="json">
+				<param name="root">testDataEntity</param>
+			</result>
+		</action>
+
+
+		<!-- 検索Action初期表示用 -->
+		<action name="sample3">
+			<result>/WEB-INF/jsp/sample3.jsp</result>
+		</action>
+		<!-- 入力チェックActionのSample -->
+		<action name="selectSample3" class="sugiim.struts2sample.action.SampleAction">
+			<result name="success" type="json">
+				<param name="root">inputError</param>
+			</result>
+		</action>
+
+		<!-- 検索ActionのSample -->
+		<action name="pointchange" class="sugiim.struts2sample.action.SampleAction">
+			<result name="success" type="redirect">/WEB-INF/jsp/sample3_result.jsp?historyId=${historyId}</result>
+		</action>
+
+
+
+		<!-- 登録ActionのSample。二重登録チェック有(tokenInterceptor) -->
+		<action name="registSample" class="sugiim.struts2sample.action.SampleRegistAction">
+			<interceptor-ref name="defaultLoginStack"/>
+			<interceptor-ref name="token">
+				<param name="includeMethods">registData</param><!-- ここで指定したメソッドにのみtokenのチェックを行う。全てのメソッドに適用したい場合は「*」を指定 -->
+			</interceptor-ref>
+			<result name="invalid.token">/WEB-INF/jsp/duplicationError.jsp</result><!-- tokenのチェックに引っかかった際の遷移先を指定 -->
+			<result name="init">/WEB-INF/jsp/sampleRegist.jsp</result>
+			<result name="input">/WEB-INF/jsp/sampleRegist.jsp</result>
+			<result name="success" type="redirect">/registResult!selectResultData?testDataInputEntity.person_id=${testDataInputEntity.person_id}</result>
+
+		</action>
+
+		<!-- 登録結果のActionのSample -->
+		<action name="registResult" class="sugiim.struts2sample.action.SampleRegistAction">
+			<result name="success">/WEB-INF/jsp/sampleResult.jsp</result>
+		</action>
+
+
+
+		<!-- 更新ActionのSample。二重登録チェック有(tokenInterceptor) -->
+		<action name="updateSample" class="sugiim.struts2sample.action.SampleUpdateAction">
+			<interceptor-ref name="defaultLoginStack"/>
+			<interceptor-ref name="token">
+				<param name="includeMethods">updateData</param>
+			</interceptor-ref>
+			<result name="init">/WEB-INF/jsp/sampleDisp.jsp</result>
+			<result name="invalid.token">/WEB-INF/jsp/duplicationError.jsp</result>
+			<result name="search">/WEB-INF/jsp/sampleDisp.jsp</result>
+			<result name="updateDisplay">/WEB-INF/jsp/sampleUpdate.jsp</result>
+			<result name="input">/WEB-INF/jsp/sampleUpdate.jsp</result>
+			<result name="success">/WEB-INF/jsp/sampleResult.jsp</result>
+			<result name="delete">/WEB-INF/jsp/sampleDeletedResult.jsp</result>
+		</action>
+
+		<!-- 統計Actionの初期表示用 -->
+		<action name="sampleStatiscs">
+			<result>/WEB-INF/jsp/sampleStatistics.jsp</result>
+		</action>
+
+		<!-- bootstrap tab Sample -->
+		<action name="sampleTab">
+			<result>/WEB-INF/jsp/sampleTab.jsp</result>
+		</action>
+
+
+	</package>
+
+	<!-- メッセージリソースファイル読み込み定義。 ResourceBundle.getBundle("MessageResources");でメッセージ取得可能 -->
+	<constant name="MessageResources" value="MessageResources"/>
+
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+</struts>
