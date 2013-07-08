@@ -21,36 +21,38 @@ $(document).ready(function() {
 
 		var errText="success";
 
-		// ID
-		var inId = $('#registForm_joinDataInputEntity_person_id').val();
 		// 名前
-		var inName = $('#registForm_joinDataInputEntity_name').val();
-		// 年齢
-		var inAge = $('#registForm_joinDataInputEntity_age').val();
-		// 名前
-		var inLocation = $('#registForm_joinDataInputEntity_location').val();
+		var inName = $('#registForm_joinDataInputEntity_user_name').val();
+		// メールアドレス
+		var inMailaddress = $('#registForm_joinDataInputEntity_mailaddress').val();
+		// 数字キー
+		var inKey = $('#registForm_joinDataInputEntity_key').val();
 
 
 		//IDがnullかどうか。
-		if (inId == ""){
-			errText = 'IDが未入力です';
+		//if (inId == ""){
+		//	errText = 'IDが未入力です';
 
 		// IDの文字種別チェック（数値であること）
-		} else if (!inId.match( /^[0-9]*$/ ) ){
-			errText = 'IDは整数で入力してください';
+		//} else if (!inId.match( /^[0-9]*$/ ) ){
+		//	errText = 'IDは整数で入力してください';
 
 
-			//名前が20文字以内かどうかチェック
-		} else if ( ((inName == "") || (inName.length > 20) )){
-			errText = '名前は20文字以内で入力してください';
+		//名前が8文字以内かどうかチェック
+		if ( ((inName == "") || (inName.length > 8) )){
+			errText = '名前は8文字以内で入力してください';
 
-		//年齢の文字種別チェック（数値）
-		} else if ( !inAge.match( /^[0-9]*$/ ) ){
-			errText = '年齢は整数で入力してください';
+		//メールアドレスが128文字以内かどうかチェック
+		} else if ( ((inMailaddress == "") || (inMailaddress.length > 8) )){
+			errText = 'メールアドレスは128文字以内で入力してください';
 
-		//年齢の上限値チェック（0<= age <= 99）
-		} else if ( (parseInt(inAge) < 0) && (parseInt(inAge) > 100) ){
-			errText = '年齢は0～99の値を入力してください';
+		//数字キーの文字種別チェック（数値）
+		} else if ( !inKey.match( /^[0-9]*$/ ) ){
+			errText = '数字キーは整数で入力してください';
+
+		//数字キーの上限値チェック（0<= key <= 9999）
+		} else if ( (parseInt(inKey) < 0) && (parseInt(inKey) > 10000) ){
+			errText = '数字キーは0～9999の値を入力してください';
 
 		} else {
 			errText="success";
@@ -102,7 +104,7 @@ $(document).ready(function() {
 
 	<div class="container-fluid"><!-- information-->
 		<div class="well well-large">
-			<s:form action="registSample!registData" cssClass="form-horizontal" id="registForm" cssStyle="padding: 0px 5px" >
+			<s:form action="joinregistSample!registData" cssClass="form-horizontal" id="registForm" cssStyle="padding: 0px 5px" >
 
 			<div class="row"><!-- error表示領域 -->
 				<div class="offset2 span8">
@@ -126,32 +128,30 @@ $(document).ready(function() {
 				<s:token/>
 
 				<div class="control-group">
-					<label class="control-label" for="registForm_joinDataInputEntity_person_id"><span class="label label-important">ID</span></label>
+					<label class="control-label" for="registForm_joinDataInputEntity_user_name"><span class="label label-important">名前</span></label>
 					<div class="controls">
-						<s:textfield type="text"  name="joinDataInputEntity.person_id"  cssClass="input-medium" placeholder="ID?"  ></s:textfield>
-					</div>
-				</div>
-
-
-				<div class="control-group">
-					<label class="control-label" for="registForm_joinDataInputEntity_name"><span class="label label-important">名前</span></label>
-					<div class="controls">
-						<s:textfield type="text"  name="joinDataInputEntity.name"  cssClass="input-xlarge" placeholder="NAME?"  ></s:textfield>
+						<s:textfield type="text"  name="joinDataInputEntity.user_name"  cssClass="input-xlarge" placeholder="NAME?"  ></s:textfield>
 					</div>
 				</div>
 
 				<div class="control-group">
-					<label class="control-label" for="registForm_joinDataInputEntity_age"><span class="label label-important">年齢</span></label>
+					<label class="control-label" for="registForm_joinDataInputEntity_mailaddress"><span class="label label-important">メールアドレス</span></label>
 					<div class="controls">
-						<s:textfield type="text"  name="joinDataInputEntity.age"  cssClass="input-mini" placeholder="AGE?"  ></s:textfield>
+						<s:textfield type="text"  name="joinDataInputEntity.mailaddress"  cssClass="input-mini" placeholder="MAILADDRESS?"  ></s:textfield>
 					</div>
 				</div>
 
+				<div class="control-group">
+					<label class="control-label" for="registForm_joinDataInputEntity_key"><span class="label label-important">数字キー</span></label>
+					<div class="controls">
+						<s:textfield type="text"  name="joinDataInputEntity.person_key"  cssClass="input-medium" placeholder="KEY?"  ></s:textfield>
+					</div>
+				</div>
 
 				<div class="control-group">
-					<label class="control-label" for="registForm_joinDataInputEntity_location"><span class="label label-important">勤務地</span></label>
+					<label class="control-label" for="registForm_joinDataInputEntity_comment"><span class="label label-important">コメント</span></label>
 					<div class="controls">
-						<s:textfield type="text"  name="joinDataInputEntity.location"  cssClass="input-xlarge" placeholder="LOCATION?"  ></s:textfield>
+						<s:textfield type="text"  name="joinDataInputEntity.comment"  cssClass="input-xlarge" placeholder="COMMENT?"  ></s:textfield>
 					</div>
 				</div>
 
@@ -183,7 +183,7 @@ $(document).ready(function() {
 					<h3 id="myModalLabel">Attenssion！</h3>
 				</div>
 				<div class="modal-body">
-					<p>データを登録します。よろしいですか？</p>
+					<p>参加を登録します。よろしいですか？</p>
 				</div>
 				<div class="modal-footer">
 					<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

@@ -67,6 +67,17 @@
 							</div>
 						</li>
 					</ul>
+					<ul class="thumbnails">
+						<li class="span4">
+							<div class="thumbnail">
+								<a href="joinregistSample">JoinregistSample</a>
+								<div class="caption">
+								<p>参加登録のサンプルです。</p>
+								<p>入力チェック→確認ダウアログ→DB登録→登録完了画面</p>
+								</div>
+							</div>
+						</li>
+					</ul>
 
 
 				</div>
