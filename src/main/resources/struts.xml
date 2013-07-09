@@ -162,6 +162,18 @@
 
 		</action>
 
+		<!-- 登録ActionのSample。二重登録チェック有(tokenInterceptor) -->
+		<action name="joinregistSample" class="sugiim.struts2sample.action.SampleRegistAction">
+			<interceptor-ref name="defaultLoginStack"/>
+			<interceptor-ref name="token">
+				<param name="includeMethods">registData</param><!-- ここで指定したメソッドにのみtokenのチェックを行う。全てのメソッドに適用したい場合は「*」を指定 -->
+			</interceptor-ref>
+			<result name="invalid.token">/WEB-INF/jsp/duplicationError.jsp</result><!-- tokenのチェックに引っかかった際の遷移先を指定 -->
+			<result name="init">/WEB-INF/jsp/JoinsampleRegist.jsp</result>
+			<result name="input">/WEB-INF/jsp/JoinsampleRegist.jsp</result>
+			<result name="success" type="redirect">/registResult!selectResultData?testDataInputEntity.person_id=${testDataInputEntity.person_id}</result>
+		</action>
+
 		<!-- 登録結果のActionのSample -->
 		<action name="registResult" class="sugiim.struts2sample.action.SampleRegistAction">
 			<result name="success">/WEB-INF/jsp/sampleResult.jsp</result>
