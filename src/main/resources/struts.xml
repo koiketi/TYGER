@@ -163,7 +163,7 @@
 		</action>
 
 		<!-- 登録ActionのSample。二重登録チェック有(tokenInterceptor) -->
-		<action name="joinregistSample" class="sugiim.struts2sample.action.SampleRegistAction">
+		<action name="joinregistSample" class="sugiim.struts2sample.action.TYGERRegistAction">
 			<interceptor-ref name="defaultLoginStack"/>
 			<interceptor-ref name="token">
 				<param name="includeMethods">registData</param><!-- ここで指定したメソッドにのみtokenのチェックを行う。全てのメソッドに適用したい場合は「*」を指定 -->
@@ -175,10 +175,9 @@
 		</action>
 
 		<!-- 登録結果のActionのSample -->
-		<action name="registResult" class="sugiim.struts2sample.action.SampleRegistAction">
+		<action name="registResult" class="sugiim.struts2sample.action.TYGERRegistAction">
 			<result name="success">/WEB-INF/jsp/sampleResult.jsp</result>
 		</action>
-
 
 
 		<!-- 更新ActionのSample。二重登録チェック有(tokenInterceptor) -->

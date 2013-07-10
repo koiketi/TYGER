@@ -120,10 +120,10 @@ public class TYGERRegistAction extends ActionSupport {
 		}
 
 		// 数字キーチェック
-		if (Common.IsNullOrEmpty(joinDataInputEntity.getKey())) {
+		//if (Common.IsNullOrEmpty(joinDataInputEntity.getKey())) {
 
-			addActionError(getText("invalid.fieldvalue.key"));
-		}
+		//	addActionError(getText("invalid.fieldvalue.key"));
+		//}
 
 		// コメントチェック
 		if (Common.IsNullOrEmpty(joinDataInputEntity.getComment())) {

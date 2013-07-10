@@ -4,7 +4,7 @@
 <Context>
 	<Resource name="jdbc/sample" auth="Container"
 		type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
-		url="jdbc:postgresql://10.63.0.248:5432/testdb"
-		username="postgres" password="password"
+		url="jdbc:postgresql://localhost:5432/testdb"
+		username="postgres" password="azunable3"
 		maxActive="200" maxIdle="30" maxWait="-1" />
 </Context>
